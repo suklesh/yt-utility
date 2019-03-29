@@ -1,0 +1,1 @@
+const url = 'https://www.youtube.com/api/timedtext?key=yttt1&asr_langs=it,fr,es,ru,nl,ja,pt,en,de,ko&sparams=asr_langs,caps,v,xoaf,xorp,expire&v=27xvtNEG2n4&hl=en-GB&xoaf=1&lang=en&name=Default&fmt=srv3';
