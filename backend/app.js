@@ -17,11 +17,10 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/getCaptionInfo", (req, res, next) => {
-  /* The request method below returns the youtube video details,
-  of which we need to strip the trackID
-  */
+  // NEED CODE: code required to make a captions call,and make sure that transcripts are available
+  // The above might not be required once the oAut2 is implemented.
 
-  // The below function helps in createing the url that will be passed in the request function below.
+  // Build the url that will be passed in the request function below.
   const videID = req.query.v;
   const url =
     "https://www.youtube.com/api/timedtext?v=" + videID + "&lang=en&fmt=srv3";
@@ -36,6 +35,9 @@ app.use("/api/getCaptionInfo", (req, res, next) => {
     var xml = body;
     parseString(xml, function(err, result) {
       res.status(200).json(result);
+      const test = JSON.stringify(result);
+      //console.log(result.timedtext.body[0].p[0]._); //Use this in angular service to help render the value into the HTML element accordingly
+      //console.log(result.timedtext.body[0].p[1].$.t);
     });
   });
 });
