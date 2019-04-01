@@ -1,0 +1,32 @@
+mat-form-field {
+  display: block;
+  padding-top: 20px;
+  margin: auto;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+
+#logoImg {
+  width: 350px;
+  height: 90px;
+  max-width: 100%;
+  height: auto;
+}
+
+
+.fixButton {
+  margin-bottom: 0px;
+  height: 33px;
+  box-shadow: none;
+}
+
+input {
+color: #070708;
+font-weight: 200;
+}
+
+:host(.customize) input {
+  border: grey solid;
+  border-width: thin;
+}

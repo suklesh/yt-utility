@@ -1,0 +1,19 @@
+<mat-form-field>
+  <input matInput type="search"
+  placeholder="Enter the Youtube url here ..."
+  [(ngModel)]="searchData"
+  (keyup.enter)="triggerSearch(searchData)"
+  />
+  <button
+  mat-button
+  matSuffix
+  mat-stroked-button
+  aria-label="search"
+  class="fixButton"
+  (click)="triggerSearch(searchData)"
+  routerLink="/results"
+>
+  <i matIcon class="material-icons md-24">youtube_searched_for</i>
+</button>
+<!-- <a routerLink="/results" (click)="triggerSearch(searchData)"><button mat-button > Submit </button></a> -->
+</mat-form-field>

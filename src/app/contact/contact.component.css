@@ -1,0 +1,22 @@
+.title {
+  font-weight: 200;
+  color: slategrey;
+}
+
+.container{
+  margin-top: 100px;
+}
+
+
+form {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.textArea {
+  width: 90%;
+  max-width: 100%;
+  height: auto;
+
+}

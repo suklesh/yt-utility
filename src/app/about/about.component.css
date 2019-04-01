@@ -1,0 +1,41 @@
+.about-card {
+  margin: 40px auto;
+  background-color: #E4D7DE;
+}
+
+.leader-card {
+  margin: 40px auto;
+  background-color: #E4D7DE;
+}
+.img-circle {
+  border-radius: 50%;
+}
+
+h1, h2 {
+  text-align: center;
+  font-weight: 300
+}
+
+.mission-state {
+  text-align: center;
+}
+
+.container {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  width: 800px;
+  margin: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.people {
+  text-align: center;
+  margin: auto;
+  width: 200px;
+}
+
+.person, .aboutText {
+  text-align: justify;
+}
+

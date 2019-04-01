@@ -1,0 +1,54 @@
+.spacer {
+  flex: 1 1 auto;
+ }
+
+ .about {
+  font-size: 13px;
+  color: slategrey;
+ }
+
+ mat-toolbar {
+   height: 30px;
+   background-color:transparent;
+   color: rgb(0, 0, 0, 0);
+   padding: 0;
+ }
+
+ ul, li {
+   font-weight: 200;
+   text-decoration: none;
+   display: inline;
+   padding: 0;
+   list-style: none;
+ }
+
+ mat-button {
+   height: 25px;
+ }
+
+ a {
+   text-decoration: none;
+ }
+
+ #logoImg {
+   padding-top: 20px;
+   padding-left: 20%;
+   height: 25px;
+   width: 35px;
+  }
+
+  .active {
+    color: #8A4A6E;
+  }
+
+ .sizer {
+   background-color: #8A4A6E;
+   height: 1px;
+   width: 10px;
+ }
+
+ img {
+   max-width: 100%;
+   height: auto
+ }
+

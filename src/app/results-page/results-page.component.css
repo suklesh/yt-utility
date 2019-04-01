@@ -1,0 +1,73 @@
+.margin {
+  margin-top: 3%;
+  margin-left: 3%;
+
+}
+
+#container {
+width: 560px;
+height: 340px;
+}
+
+p {
+  text-align: justify;
+}
+
+.notesCard {
+  margin-top: 5%;
+}
+
+.borderLine {
+  border-bottom: 1px solid grey;
+  margin-bottom: 20px;
+}
+
+/* #container {
+  height: 480px;
+  width: 720px;
+} */
+
+/* .iframe-container {
+  position: relative;
+  width: auto;
+  padding-bottom: 56.25%;
+  height: auto;
+}
+.iframe-container iframe {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+} */
+
+/*
+  .video-container {
+    position: absolute;
+    margin-top: 5%;
+    margin-left: 5%;
+    } */
+
+
+
+    /* .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 35px;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    max-width: 100%;
+    height: 100%;
+} */
+
+
+
+
+
