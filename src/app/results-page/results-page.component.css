@@ -1,26 +1,31 @@
+
+
 .margin {
+  width: 900px;
   margin-top: 3%;
   margin-left: 3%;
+  margin-right: 0px;
+  height: auto;
 
-}
-
-#container {
-width: 560px;
-height: 340px;
 }
 
 p {
   text-align: justify;
+  font-size: 13px;
 }
 
 .notesCard {
   margin-top: 5%;
+  font-weight: 200;
 }
 
 .borderLine {
   border-bottom: 1px solid grey;
   margin-bottom: 20px;
 }
+
+
+
 
 /* #container {
   height: 480px;

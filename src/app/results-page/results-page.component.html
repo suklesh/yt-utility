@@ -1,48 +1,52 @@
 <!-- https://blog.angularindepth.com/angular-flex-layout-flexbox-and-grid-layout-for-angular-component-6e7c24457b63 -->
 
-<div
-  fxLayout="row wrap"
-  fxLayout.lt-sm="column"
-  fxLayoutGap="32px"
-  fxLayoutAlign="flex-start"
->
+<div fxLayout="row wrap" fxLayoutAlign="flex-start">
   <mat-card
-    id="container"
-    class="margin mat-elevation-z0"
-    fxFlex="0 1 calc(33.3% - 32px)"
-    fxFlex.lt-md="0 1 calc(50% - 32px)"
-    fxFlex.lt-sm="100%"
+  class=" margin mat-elevation-z0"
+  fxFlex="0 1 calc(33.3% - 32px)"
+  fxFlex.lt-md="0 1 calc(50%)"
+  fxFlex.lt-sm="100%"
   >
     <div class="video-container">
       <div id="player"></div>
     </div>
-  </mat-card>
-  <mat-card
-    class=" margin mat-elevation-z0"
-    fxFlex="0 1 calc(33.3% - 32px)"
-    fxFlex.lt-md="0 1 calc(50% - 32px)"
-    fxFlex.lt-sm="100%"
-  >
-    <h3>Search Utility</h3>
-    <div class="borderLine">
-
+    <div>
+        <h4> {{ title }} </h4>
     </div>
     <div>
-      <div>
-        <mat-form-field>
-          <input matInput type="text" placeholder="Search Word" />
+      <p>
+        {{ desc }}
+      </p>
+    </div>
+  </mat-card>
+  <mat-card
+  class="margin mat-elevation-z0"
+  fxFlex="0 1 calc(33.3% - 32px)"
+  fxFlex.lt-md="0 1 calc(50% - 32px)"
+  fxFlex.lt-sm="100%"
+  >
+    <h3 *ngIf="captionCheck" >Search Utility</h3>
+    <h3 *ngIf="!captionCheck">Search Utility Not available on this Video</h3>
+    <div class="borderLine"></div>
+    <div>
+      <div *ngIf="captionCheck">
+        <mat-form-field *ngIf="captionCheck">
+          <input matInput type="text" placeholder="Search Word"/>
           <button mat-button matSuffix mat-stroked-button aria-label="search">
             <i matIcon class="material-icons md-24">search</i>
           </button>
         </mat-form-field>
         <mat-card>
-        <div *ngFor="let _ of [1, 2, 3]">
-          <button>Occurance</button>
-        </div>
-      </mat-card>
+          <div *ngFor="let _ of [1, 2, 3]">
+            <button mat-button matSuffix mat-stroked-button>Occurance</button>
+          </div>
+        </mat-card>
       </div>
     </div>
     <mat-card class="notesCard">
+      <mat-form-field>
+        <input matInput type="text" placeholder="Enter Notes for BookMark" />
+      </mat-form-field>
       <h4>Notes</h4>
       <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis,
