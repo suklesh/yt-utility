@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
   resultPage: boolean;
   indicator = '';
-
+  vidID = '';
   toggleLogoSearch() {
     this.resultPage = false;
   }
@@ -22,10 +22,17 @@ export class HeaderComponent implements OnInit {
     this.resultPage = false;
     this.service.resultPageInd()
     .subscribe((indicator) => {
+      console.log(indicator);
       if (indicator === 'started') {
         this.resultPage = true;
         console.log(this.resultPage);
       }
+    });
+
+    this.service.getVidID().subscribe((vid) => {
+      console.log("Start");
+      this.vidID = vid;
+      console.log("Got the V ID " + this.vidID);
     });
   }
 

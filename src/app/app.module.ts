@@ -24,6 +24,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
+import { CaptionSearchComponent } from './caption-search/caption-search.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ContactComponent } from './contact/contact.component';
     FooterComponent,
     ResultsPageComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    CaptionSearchComponent
   ],
   imports: [
     BrowserModule,

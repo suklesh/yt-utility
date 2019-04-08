@@ -3,7 +3,7 @@ const app = express();
 const request = require("request");
 var parseString = require("xml2js").parseString;
 const API_KEY = "AIzaSyBK-tVKOHjUUzYnu-zhQphDYsyYv2NGpHg";
-var captionsAvailable = "";
+//const captionsAvailable;
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -22,6 +22,9 @@ app.use("/api/getCaptionInfo", (req, res, next) => {
   // NEED CODE: code required to make a captions call,and make sure that transcripts are available
   // The above might not be required once the oAut2 is implemented.
   const videID = req.query.v;
+  const searchString = req.query.str;
+
+  //searchString = "here";
 
   // Build the url that will be passed in the request function below.
   const url =
@@ -33,64 +36,107 @@ app.use("/api/getCaptionInfo", (req, res, next) => {
   request(url, function(error, response, body) {
     console.log("error:", error); // Print the error if one occurred
     console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
-    console.log("body:", body);
+    //console.log("body:", body);
     var xml = body;
     parseString(xml, function(err, result) {
-      res.status(200).json(result);
-      const test = JSON.stringify(result);
+      //res.status(200).json(result);
+      //res.status(200).json(result.timedtext.body[0]); ************* USE THIS RESPONSE If the alternate does not work **************
+      const test = result.timedtext.body[0].p;
+      console.log(searchWord(test, searchString));
+      res.status(200).json(searchWord(test, searchString));
+      console.log(searchString);
       //console.log(result.timedtext.body[0].p[0]._); //Use this in angular service to help render the value into the HTML element accordingly
       //console.log(result.timedtext.body[0].p[1].$.t);
+      //console.log(result.timedtext.body[0]);
+      //console.log(test);
+      //YourControllerName/ActionMethodName?querystring1=querystringvalue1&querystring2=querystringvalue2&querystring3=querystringvalue3");
     });
+
+    function searchWord(test, searchString) {
+      //console.log(test);
+      const length = Object.keys(test).length;
+      var results = [];
+      var searchVal = searchString;
+      for (var i = 0; i < length; i++) {
+        if (searchArray(test[i]._, searchVal)) {
+          results.push(test[i].$.t);
+        }
+      }
+      return results;
+    }
+
+    function searchArray(sentance, searchWord) {
+      str = sentance;
+      strgs = str.split(" ");
+     // console.log(strgs);
+      //console.log(strgs);
+      for (i=0; i < strgs.length; i++){
+        if(strgs[i] === searchWord) {
+          return true;
+        }
+      }
+    }
   });
 });
 
 app.use("/api/videoInfo", (req, res, next) => {
   const videID = req.query.v;
-
   captionsCheck = {};
+  captionsAvailable = "";
+  contentInfo = {};
+
   // captions API url below
   const url2 =
     "https://www.googleapis.com/youtube/v3/captions?part=snippet&key=" +
     API_KEY +
     "&videoId=" +
     videID;
-  request(url2, function(error, response, body) {
-    console.log("error:", error); // Print the error if one occurred
-    console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
-    contentInfo = JSON.parse(body);
-    //console.log(contentInfo.items[1]);
-    if (
-      contentInfo.items[1] != null &&
-      contentInfo.items[1].snippet.trackKind === "standard"
-    ) {
-      console.log("Entered Value Setter");
-      captionsAvailable = "true";
-    } else {
-      captionsAvailable = "false";
-    }
-  });
-
-  contentInfo = {};
-  // Snippet of content details Youtube API below
+  // Video Detials below
   const url =
     "https://www.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=" +
     videID +
     "&key=" +
     API_KEY;
 
-  request(url, function(error, response, body) {
+  function videDetails() {
+    // Snippet of content details Youtube API below
+    request(url, function(error, response, body) {
+      console.log("error:", error); // Print the error if one occurred
+      console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
+      //console.log("body:", body);
+      contentInfo = JSON.parse(body);
+      console.log("******* Entered Results  *******");
+      //res.status(200).json(contentInfo.items[0]);
+      console.log(
+        "Inside the response captionsAvailable = " + captionsAvailable
+      );
+      res.status(200).json({
+        captionsAvailable: captionsAvailable,
+        contentInfo: contentInfo.items[0]
+      });
+    });
+  }
+
+  // This code below can change when the OAuth 2.0 is implemented, which will give access to all captions
+  request(url2, function(error, response, body) {
     console.log("error:", error); // Print the error if one occurred
     console.log("statusCode:", response && response.statusCode); // Print the response status code if a response was received
-    //console.log("body:", body);
     contentInfo = JSON.parse(body);
-    //res.status(200).json(contentInfo.items[0]);
-    res.status(200).json({
-      captionsAvailable: captionsAvailable,
-      contentInfo: contentInfo.items[0]
-    });
+    //console.log(contentInfo.items[1]);
+    console.log("******* Entered Caption Check *******");
+    if (
+      contentInfo.items[1] != null &&
+      contentInfo.items[1].snippet.trackKind === "standard"
+    ) {
+      captionsAvailable = "true";
+      console.log("Caption Available " + captionsAvailable);
+    } else {
+      captionsAvailable = "false";
+      console.log("Caption Not Available " + captionsAvailable);
+    }
+    videDetails();
   });
 });
 
 module.exports = app;
-
 //https://www.youtube.com/api/timedtext?v=nShlloNgM2E&lang=en&fmt=srv3

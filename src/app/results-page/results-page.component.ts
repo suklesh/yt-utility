@@ -1,12 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DataHandlerService } from "../data-handler.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-results-page",
   templateUrl: "./results-page.component.html",
   styleUrls: ["./results-page.component.css"]
 })
-export class ResultsPageComponent implements OnInit {
+export class ResultsPageComponent implements OnInit, OnDestroy {
+  private serviceSub: Subscription;
   indicator = "started";
   public YT: any;
   public video: string;
@@ -16,7 +18,9 @@ export class ResultsPageComponent implements OnInit {
   public resultData: object;
   public title: string;
   public desc: string;
-  captionCheck = true;
+
+  captionCheck: boolean;
+
   constructor(private service: DataHandlerService) {}
   init() {
     var tag = document.createElement("script");
@@ -25,23 +29,26 @@ export class ResultsPageComponent implements OnInit {
     var firstScriptTag = document.getElementsByTagName("script")[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
+
   ngOnInit() {
-    this.service.resultsUpdate().subscribe((data: object) => {
+    this.serviceSub = this.service.resultsUpdate().subscribe((data: object) => {
       this.resultData = data;
       this.video = this.resultData[0].contentInfo.id;
+      this.videoID = this.video;
+      this.service.broadCastVidID(this.video); // broadcast the VidID for elements within the results page
       this.title = this.resultData[0].contentInfo.snippet.title;
       this.desc = this.resultData[0].contentInfo.snippet.description;
 
-      if (this.resultData[0].captionsAvailable === 'false') {
+      if (this.resultData[0].captionsAvailable == "false") {
         this.captionCheck = false;
+      } else if (this.resultData[0].captionsAvailable == "true") {
+        this.captionCheck = true;
       }
       // Load iframe below
       if (document.getElementById("iframe_api") === null) {
-        console.log("Window Not loaded");
         this.loadWindow();
       } else {
-        console.log("Window loaded");
-        this.reLoadWindow(this.video);
+        //this.reLoadWindow(this.video);
       }
     });
     this.service.resultPageStarted(this.indicator);
@@ -50,38 +57,31 @@ export class ResultsPageComponent implements OnInit {
     this.service.inputValue().subscribe((data: string) => {
       this.video = data;
     });
-    console.log("Right outside the window");
-    console.log(" inside the window " + this.video);
-    this.YT = window["YT"];
+    // this.YT = window["YT"];
     this.player = new window["YT"].Player("player", {
-      videoId: video,
+      videoId: this.video,
       height: "100%",
       width: "100%",
       events: {
         onStateChange: this.onPlayerStateChange.bind(this),
         onError: this.onPlayerError.bind(this),
-        onReady: e => {
-          e.target.a;
-        }
-      },
-      playerVars: {
+        onReady: this.onPlayerReady
+      }
+      /* playerVars: {
         autoplay: 0,
         controls: 1,
         modestbranding: 1,
         rel: 0,
         showInfo: 1
-      }
+      } */
     });
   }
   loadWindow() {
     this.init();
-    console.log("Iframe initiated");
     this.service.inputValue().subscribe((data: string) => {
       this.video = data;
     });
-    console.log("Right outside the window");
     window["onYouTubeIframeAPIReady"] = e => {
-      console.log(" inside the window " + this.video);
       this.YT = window["YT"];
       this.player = new window["YT"].Player("player", {
         videoId: this.video,
@@ -90,43 +90,33 @@ export class ResultsPageComponent implements OnInit {
         events: {
           onStateChange: this.onPlayerStateChange.bind(this),
           onError: this.onPlayerError.bind(this),
-          onReady: e => {
-            e.target.a;
-          }
-        },
-        playerVars: {
+          onReady: this.onPlayerReady
+        }
+        /* playerVars: {
           autoplay: 0,
           controls: 1,
           modestbranding: 1,
           rel: 0,
           showInfo: 1
-        }
+        } */
       });
     };
   }
   onPlayerStateChange(event) {
-    console.log(event);
-    switch (event.data) {
-      case window["YT"].PlayerState.PLAYING:
-        if (this.cleanTime() == 0) {
-          console.log("started " + this.cleanTime());
-        } else {
-          console.log("playing " + this.cleanTime());
-        }
-        break;
-      case window["YT"].PlayerState.PAUSED:
-        if (this.player.getDuration() - this.player.getCurrentTime() != 0) {
-          console.log("paused" + " @ " + this.cleanTime());
-        }
-        break;
-      case window["YT"].PlayerState.ENDED:
-        console.log("ended ");
-        break;
+    if (event.data == this.YT.PlayerState.PLAYING) {
     }
   }
-  cleanTime() {
-    return Math.round(this.player.getCurrentTime());
+
+  onPlayerReady(event) {
+    event.target.playVideo();
   }
+
+  seekTo(sec) {
+    const timer = sec/1000;
+    console.log("Entered the player and setting to " + timer);
+    this.player.seekTo(timer, true);
+  }
+
   onPlayerError(event) {
     switch (event.data) {
       case 2:
@@ -137,6 +127,10 @@ export class ResultsPageComponent implements OnInit {
       case 101 || 150:
         break;
     }
+  }
+
+  ngOnDestroy() {
+    this.serviceSub.unsubscribe();
   }
 
   /*   constructor() { }

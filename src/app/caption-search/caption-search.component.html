@@ -1,0 +1,18 @@
+<div>
+  <div>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Enter Search Word" [(ngModel)]="searchWord"/>
+      <button mat-button matSuffix mat-stroked-button aria-label="search">
+        <i matIcon class="material-icons md-24" (click)="onSearchClick(searchWord)">search</i>
+      </button>
+    </mat-form-field>
+    <mat-card *ngIf="captionsRec">
+        <div *ngFor="let caption of captionResults">
+      <!-- <div *ngFor="let _ of [0,1,3]"> -->
+        <!-- <button mat-button matSuffix mat-stroked-button [(ngModel)]="buttonValue" (click)="updateIframesPram()">{{searchWord}} @ {{ millisToMinutesAndSeconds(caption) }}</button> -->
+        <!-- <button mat-button matSuffix mat-stroked-button [(ngModel)]="buttonValue" (click)="updateIframesPram()">{{ millisToMinutesAndSeconds(caption) }}</button> -->
+        <button mat-button matSuffix mat-stroked-button (click)="updateIframesPram(caption)">{{searchWord}} @ {{ millisToMinutesAndSeconds(caption) }}</button>
+      </div>
+    </mat-card>
+  </div>
+</div>
