@@ -1,7 +1,7 @@
 
 
 .margin {
-  width: 900px;
+  width: 1000px;
   margin-top: 3%;
   margin-left: 3%;
   margin-right: 0px;
@@ -24,7 +24,14 @@ p {
   margin-bottom: 20px;
 }
 
+.container {
+  margin: 0 auto;
+  max-width: 900px;
 
+  height: 100px;
+  background-color: #ccc;
+  border-radius: 3px;
+}
 
 
 /* #container {

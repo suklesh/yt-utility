@@ -1,6 +1,6 @@
 <!-- https://blog.angularindepth.com/angular-flex-layout-flexbox-and-grid-layout-for-angular-component-6e7c24457b63 -->
 
-<div fxLayout="row wrap" fxLayoutAlign="flex-start">
+<div class="container" fxLayout="row wrap" fxLayoutAlign="flex-start">
   <mat-card
     class=" margin mat-elevation-z0"
     fxFlex="0 1 calc(33.3% - 32px)"
@@ -32,7 +32,7 @@
     <div *ngIf="captionCheck">
       <app-caption-search [message]="videoID"></app-caption-search>
     </div>
-    <mat-card class="notesCard">
+    <!-- <mat-card class="notesCard">
       <mat-form-field>
         <input matInput type="text" placeholder="Enter Notes for BookMark" />
       </mat-form-field>
@@ -43,7 +43,7 @@
         dolores deleniti vero repudiandae expedita dicta consequuntur ad est
         sit.Í
       </p>
-    </mat-card>
+    </mat-card> -->
   </mat-card>
 </div>
 
