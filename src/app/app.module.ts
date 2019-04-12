@@ -8,7 +8,7 @@ import { BrandComponent } from './brand/brand.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {
@@ -17,6 +17,7 @@ import {
   MatButtonModule,
   MatToolbarModule
 } from '@angular/material';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ResultsPageComponent } from './results-page/results-page.component';
@@ -25,6 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { CaptionSearchComponent } from './caption-search/caption-search.component';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { CaptionSearchComponent } from './caption-search/caption-search.componen
     ResultsPageComponent,
     AboutComponent,
     ContactComponent,
-    CaptionSearchComponent
+    CaptionSearchComponent,
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +54,8 @@ import { CaptionSearchComponent } from './caption-search/caption-search.componen
     MatButtonModule,
     MatToolbarModule,
     MatGridListModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
     HttpClientModule

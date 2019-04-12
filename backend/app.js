@@ -1,8 +1,29 @@
 const express = require("express");
 const app = express();
 const request = require("request");
-var parseString = require("xml2js").parseString;
+const authRoutes = require("./routes/auth");
 const API_KEY = "AIzaSyBK-tVKOHjUUzYnu-zhQphDYsyYv2NGpHg";
+const mongoosse = require("mongoose");
+
+// Mongo cluster pass - lfUAcRdrKFz1Vy1l ytApp
+mongoosse
+  .connect(
+    "mongodb+srv://suk:TVg3BiOAVKJQC7dq@cluster0-pordn.mongodb.net/test?retryWrites=true"
+  )
+  .then(() => {
+    console.log("Connected to DB");
+  })
+  .catch(() => {
+    console.log("Connection Failed");
+  });
+
+// https://codeburst.io/hitchhikers-guide-to-back-end-development-with-examples-3f97c70e0073
+// To parse the data in the body we will need to add middleware into our application to provide this functionality
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+var parseString = require("xml2js").parseString;
 //const captionsAvailable;
 
 app.use((req, res, next) => {
@@ -68,10 +89,10 @@ app.use("/api/getCaptionInfo", (req, res, next) => {
     function searchArray(sentance, searchWord) {
       str = sentance;
       strgs = str.split(" ");
-     // console.log(strgs);
+      // console.log(strgs);
       //console.log(strgs);
-      for (i=0; i < strgs.length; i++){
-        if(strgs[i] === searchWord) {
+      for (i = 0; i < strgs.length; i++) {
+        if (strgs[i] === searchWord) {
           return true;
         }
       }
@@ -138,5 +159,7 @@ app.use("/api/videoInfo", (req, res, next) => {
   });
 });
 
+// app.use(bodyParser.urlencoded({extended: true}));
+app.use("/api/auth", authRoutes);
 module.exports = app;
 //https://www.youtube.com/api/timedtext?v=nShlloNgM2E&lang=en&fmt=srv3
