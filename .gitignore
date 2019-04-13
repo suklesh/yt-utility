@@ -41,10 +41,8 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-/
 NOTES.txt
 nodemon.json
-environments/
 
 # System Files
 .DS_Store

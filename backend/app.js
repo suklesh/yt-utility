@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const request = require("request");
 const authRoutes = require("./routes/auth");
-const API_KEY = "AIzaSyBK-tVKOHjUUzYnu-zhQphDYsyYv2NGpHg";
+const API_KEY = process.env.API_KEY;
 const mongoosse = require("mongoose");
 
 // Mongo cluster pass - lfUAcRdrKFz1Vy1l ytApp
