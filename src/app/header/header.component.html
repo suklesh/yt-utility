@@ -20,17 +20,24 @@
           ></span
         >
       </li>
-      <li>
+      <li *ngIf="!userIsAuthen">
         <span class="about"
           ><a mat-button routerLink="/login" routerLinkActive="active"
             >Login</a
           ></span
         >
       </li>
-      <li>
+      <li *ngIf="!userIsAuthen">
         <span class="about"
           ><a mat-button routerLink="/signup" routerLinkActive="active"
-            >Sign Up</a
+            >Signup</a
+          ></span
+        >
+      </li>
+      <li *ngIf="userIsAuthen">
+        <span class="about"
+          ><button (click)="onLogout()" mat-button routerLinkActive="active"
+            >Logout</button
           ></span
         >
       </li>

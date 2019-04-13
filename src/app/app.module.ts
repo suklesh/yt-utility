@@ -28,6 +28,7 @@ import { ContactComponent } from './contact/contact.component';
 import { CaptionSearchComponent } from './caption-search/caption-search.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+import { NotesComponent } from './notes/notes.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { LoginComponent } from './login/login.component';
     ContactComponent,
     CaptionSearchComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    NotesComponent
   ],
   imports: [
     BrowserModule,

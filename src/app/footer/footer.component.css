@@ -3,7 +3,7 @@
   position:absolute;
   bottom:0;
   width:100%;
-  height:auto;   /* Height of the footer */
+  height:60px;   /* Height of the footer */
   font-size: 15px;
   text-align:center;
 }

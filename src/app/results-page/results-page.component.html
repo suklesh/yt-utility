@@ -3,8 +3,8 @@
 <div class="container" fxLayout="row wrap" fxLayoutAlign="flex-start">
   <mat-card
     class=" margin mat-elevation-z0"
-    fxFlex="0 1 calc(33.3% - 32px)"
-    fxFlex.lt-md="0 1 calc(50%)"
+    fxFlex="0 1 calc(50% - 32px)"
+    fxFlex.lt-md="0 1 calc(70%)"
     fxFlex.lt-sm="100%"
   >
     <div class="video-container">
@@ -15,14 +15,14 @@
     </div>
     <div>
       <h5>Description</h5>
-      <p>
+      <p class="desc">
         {{ desc }}
       </p>
     </div>
   </mat-card>
   <mat-card
     class="margin mat-elevation-z0"
-    fxFlex="0 1 calc(33.3% - 32px)"
+    fxFlex="0 1 calc(50% - 32px)"
     fxFlex.lt-md="0 1 calc(50% - 32px)"
     fxFlex.lt-sm="100%"
   >
@@ -32,18 +32,7 @@
     <div *ngIf="captionCheck">
       <app-caption-search [message]="videoID"></app-caption-search>
     </div>
-    <!-- <mat-card class="notesCard">
-      <mat-form-field>
-        <input matInput type="text" placeholder="Enter Notes for BookMark" />
-      </mat-form-field>
-      <h4>Notes</h4>
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis,
-        ullam et quas maiores, ut quo excepturi repellendus provident a ex
-        dolores deleniti vero repudiandae expedita dicta consequuntur ad est
-        sit.Í
-      </p>
-    </mat-card> -->
+    <app-notes></app-notes>
   </mat-card>
 </div>
 

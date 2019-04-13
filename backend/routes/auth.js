@@ -12,10 +12,6 @@ router.post("/signup", (req, res, next) => {
       email: req.body.email,
       password: hash
     });
-    /* res.status(201).json({
-      message: "user Created",
-      result: user
-    }); */
     user
       .save()
       .then(result => {
@@ -32,7 +28,6 @@ router.post("/signup", (req, res, next) => {
       });
   });
 });
-
 router.post("/login", (req, res, next) => {
   let fetchedUser;
   User.findOne({ email: req.body.email })
@@ -70,5 +65,4 @@ router.post("/login", (req, res, next) => {
       });
     });
 });
-
 module.exports = router;

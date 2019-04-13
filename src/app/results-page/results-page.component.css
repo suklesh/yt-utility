@@ -27,10 +27,12 @@ p {
 .container {
   margin: 0 auto;
   max-width: 900px;
-
   height: 100px;
-  background-color: #ccc;
   border-radius: 3px;
+}
+
+.desc {
+  color: grey;
 }
 
 

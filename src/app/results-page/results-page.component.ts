@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DataHandlerService } from "../data-handler.service";
 import { Subscription } from "rxjs";
+import { AuthService } from "../auth.service";
 
 @Component({
   selector: "app-results-page",
@@ -9,6 +10,8 @@ import { Subscription } from "rxjs";
 })
 export class ResultsPageComponent implements OnInit, OnDestroy {
   private serviceSub: Subscription;
+  private authSub: Subscription;
+  public userIsAuth = false;
   indicator = "started";
   public YT: any;
   public video: string;
@@ -21,7 +24,10 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
 
   captionCheck: boolean;
 
-  constructor(private service: DataHandlerService) {}
+  constructor(
+    private authListSub: AuthService,
+    private service: DataHandlerService
+  ) {}
   init() {
     var tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
@@ -48,10 +54,14 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
       if (document.getElementById("iframe_api") === null) {
         this.loadWindow();
       } else {
-        //this.reLoadWindow(this.video);
+        this.reLoadWindow(this.video);
       }
     });
     this.service.resultPageStarted(this.indicator);
+    this.authSub = this.authListSub.getAuthStatusList().subscribe(isAuth => {
+      this.userIsAuth = isAuth;
+      console.log("results page auth listener " + this.userIsAuth);
+    });
   }
   reLoadWindow(video: string) {
     this.service.inputValue().subscribe((data: string) => {
@@ -66,14 +76,14 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
         onStateChange: this.onPlayerStateChange.bind(this),
         onError: this.onPlayerError.bind(this),
         onReady: this.onPlayerReady
-      }
-      /* playerVars: {
+      },
+      playerVars: {
         autoplay: 0,
         controls: 1,
         modestbranding: 1,
         rel: 0,
         showInfo: 1
-      } */
+      }
     });
   }
   loadWindow() {
@@ -91,14 +101,14 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
           onStateChange: this.onPlayerStateChange.bind(this),
           onError: this.onPlayerError.bind(this),
           onReady: this.onPlayerReady
-        }
-        /* playerVars: {
+        },
+        playerVars: {
           autoplay: 0,
           controls: 1,
           modestbranding: 1,
           rel: 0,
           showInfo: 1
-        } */
+        }
       });
     };
   }
@@ -112,7 +122,7 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
   }
 
   seekTo(sec) {
-    const timer = sec/1000;
+    const timer = sec / 1000;
     console.log("Entered the player and setting to " + timer);
     this.player.seekTo(timer, true);
   }
@@ -131,6 +141,7 @@ export class ResultsPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.serviceSub.unsubscribe();
+    this.authSub.unsubscribe();
   }
 
   /*   constructor() { }

@@ -32,6 +32,8 @@ export class CaptionSearchComponent implements OnInit, OnDestroy {
   searchWord = "";
   buttonValue = "";
   captionsData = [];
+  resultMessage: string;
+  regularDistribution = 100 / 3;
   //vid = "9oWOsocN7qg";
 
   onSearchClick() {
@@ -46,10 +48,15 @@ export class CaptionSearchComponent implements OnInit, OnDestroy {
       .captionDataRecieved()
       .subscribe((data: object) => {
         this.captionResults = data[0];
+        const length = data[0].length;
         this.numbBut = Object.keys(this.captionResults);
         console.log(this.captionResults);
-        if (this.captionResults == null) {
+        if (length == 0) {
           this.captionsRec = false;
+          this.resultMessage = "No Results";
+          console.log(this.resultMessage);
+        } else {
+          this.resultMessage = "";
         }
       });
   }
@@ -74,6 +81,6 @@ export class CaptionSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.serviceSub.unsubscribe();
+    //this.serviceSub.unsubscribe();
   }
 }
