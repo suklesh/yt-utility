@@ -32,6 +32,7 @@ speed-measure-plugin.json
 .history/*
 
 # misc
+/src/environments
 /.sass-cache
 /connect.lock
 /coverage
@@ -40,7 +41,10 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/
 NOTES.txt
+nodemon.json
+environments/
 
 # System Files
 .DS_Store

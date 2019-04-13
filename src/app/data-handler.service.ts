@@ -1,9 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Subject } from "rxjs";
+import { environment } from '../../src/environments/environment';
+
+const BACKEND_URL = environment.apiUrl;
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class DataHandlerService {
   constructor(private http: HttpClient) {}
@@ -26,7 +29,7 @@ export class DataHandlerService {
 
   getData(v: string) {
     this.http
-      .get<{ results: {} }>("http://localhost:3000/api/videoInfo?v=" + v) // search data passed to express as query param
+      .get<{ results: {} }>(BACKEND_URL + '/videoInfo?v=' + v) // search data passed to express as query param
       .subscribe(resultsData => {
         this.resultData = resultsData;
         console.log(this.resultData);
@@ -40,7 +43,7 @@ export class DataHandlerService {
     //searchInput = "here";
     this.http
       .get<{ results: {} }>(
-        "http://localhost:3000/api/getCaptionInfo?v=" + vID + "&str=" + searchInput
+        BACKEND_URL + '/getCaptionInfo?v=' + vID + '&str=' + searchInput
       )
       .subscribe(data => {
         this.captionData = data;

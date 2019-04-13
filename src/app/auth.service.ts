@@ -1,9 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { AuthData } from "./auth-data.model";
-import { Subject, TimeoutError } from 'rxjs';
-import { Router } from '@angular/router';
+import { Subject, TimeoutError } from "rxjs";
+import { Router } from "@angular/router";
+import { environment } from '../../src/environments/environment';
 
+const BACKEND_URL = environment.apiUrl + "/auth";
 @Injectable({
   providedIn: "root"
 })
@@ -27,27 +29,24 @@ export class AuthService {
 
   createUser(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
-    this.http
-      .post("http://localhost:3000/api/auth/signup", authData)
-      .subscribe(response => {
-        console.log(response);
-      });
+    this.http.post(BACKEND_URL + '/signup', authData).subscribe(response => {
+      console.log(response);
+    });
   }
 
   login(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
     this.http
-      .post<{token: string}>("http://localhost:3000/api/auth/login", authData)
+      .post<{ token: string }>(BACKEND_URL + '/login', authData)
       .subscribe(response => {
         const token = response.token;
         this.token = token;
-        if(token) {
+        if (token) {
           this.isAuthent = true;
           this.authStatusList.next(true);
           this.saveAuthSession(token);
-        this.router.navigate(['/']);
+          this.router.navigate(["/"]);
         }
-
       });
   }
 
@@ -56,16 +55,15 @@ export class AuthService {
     this.isAuthent = false;
     this.authStatusList.next(false);
     this.clearAuthSession();
-    this.router.navigate(['/']);
+    this.router.navigate(["/"]);
   }
 
   private saveAuthSession(token: string) {
-    localStorage.setItem('token', token);
+    localStorage.setItem("token", token);
     //localStorage.setItem('exp', expDate.toISOString());
   }
   private clearAuthSession() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('exp');
+    localStorage.removeItem("token");
+    localStorage.removeItem("exp");
   }
-
 }

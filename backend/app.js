@@ -8,7 +8,9 @@ const mongoosse = require("mongoose");
 // Mongo cluster pass - lfUAcRdrKFz1Vy1l ytApp
 mongoosse
   .connect(
-    "mongodb+srv://suk:TVg3BiOAVKJQC7dq@cluster0-pordn.mongodb.net/test?retryWrites=true"
+    "mongodb+srv://suk:" +
+      process.env.MONGO_ATLAS_PW +
+      "@cluster0-pordn.mongodb.net/test?retryWrites=true"
   )
   .then(() => {
     console.log("Connected to DB");
